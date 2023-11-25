@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json">
+  <title>MY FGO</title>
+</head>
+<body>
+  <div class="wadah">
+    <nav class ="tab">
+      <div class="ranata">
+        <div class="hurufpertama">My</div>
+        <div class="hurufkedua">FGO</div>
+      </div>
+      <ul class="navigasi">
+        <li><a href="index.html">Utama</a></li>
+        <li><a href="waifu.html">Kedua</a></li>
+        <li><a href="profile.html">Profile</a></li>  
+      </ul>
+    </nav>
+  </div>
+  <main class="mainprofile">
+    <h1>Command Code List :</h1>
+    <ul id = "servantList">
+
+    </ul>
+    <!-- Your content goes here -->
+    <script>
+      const apiUrl = 'https://api.atlasacademy.io/export/NA/nice_command_code.json';
+
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => displayServantList(data))
+
+        .catch(error => console.error(error));
+
+
+      function displayServantList(Data) {
+        const servantListElement = document.getElementById('servantList');
+        const servantData = Data.slice(0, 35);
+
+          // Iterasi melalui data servant
+        servantData.forEach(servant => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${servant.name} - Rarity: ${servant.rarity} Star`;
+            listItem.addEventListener('click', () => {
+              window.location.href = `XYZ.html?name=${encodeURIComponent(servant.name)}&class=${encodeURIComponent(servant.className)}`;
+              });
+            servantListElement.appendChild(listItem);
+            });
+          }
+
+    </script>
+  </main>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch(error => {
+          console.error('Service Worker registration failed:', error);
+        });
+    }
+  </script>
+
+  <nav class ="blue">
+    <div class="navigasibawah">
+      <img id="clickableutama" src="navbar1.png" width="50px" height="50px" alt="Clickable Image">
+      <img id="clickablekedua" src="navbar2.png" width="50px" height="50px" alt="Clickable Image">
+      <img id="clickableprofile" src="navbar3.png" width="50px" height="50px" alt="Clickable Image">
+    </div>
+  </nav>
+
+  <script>
+        document.getElementById('clickableutama').addEventListener('click', function() {
+        window.location.href = 'index.html';});
+
+      document.getElementById('clickablekedua').addEventListener('click', function() {
+        window.location.href = 'waifu.html';});
+
+      document.getElementById('clickableprofile').addEventListener('click', function() {
+        window.location.href = 'profile.html';});
+  </script>
+</body>
+</html>
